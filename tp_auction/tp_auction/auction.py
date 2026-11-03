@@ -1,14 +1,15 @@
 # TODO !
+from itertools import count
 class Auction:
-    def __init__(self,cli, name):
-        super().__init__(cli)
-        self.name=name
+    def __init__(self, cli):
+        self.cli = cli
     
     def prixdepart(self):
         self.cli.display(f'Started auction of type: {self.name}')
         opening_bid = self.cli.prompt('Please enter the amount for the opening bid:')
-        self.opening_bid = int(opening_bid)
-        self.cli.display(f"Opening bid is: {self.opening_bid}")
+        if opening_bid!='' and opening_bid is not None :
+            self.opening_bid = int(opening_bid)
+            self.cli.display(f"Opening bid is: {self.opening_bid}")
         return self.opening_bid
 
     def encherisseurs(self):
@@ -24,15 +25,16 @@ class Auction:
         return self.bidders 
 
     def auction_loop(self, opening_bid, bidders):
-        NotImplementedError
+        raise NotImplementedError
 
     def gagnants(self, winner , standing_bid):
         self.cli.display("\n~~~~~~~~\n")
         self.cli.display(f"Winner is {winner}. Winning bid is {standing_bid}.")
 
-    def play(self, winner, price):
-        self.auction_loop(self.prixdepart(), self.encherisseurs())
+    def play(self):
+        winner, price = self.auction_loop(self.prixdepart(), self.encherisseurs())
         if winner is None:
             self.cli.display("No winner for this auction.")
-        self.gagnants(winner, price)
+        else:
+            self.gagnants(winner, price)
 
