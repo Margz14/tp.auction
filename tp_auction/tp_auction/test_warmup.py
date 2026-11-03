@@ -191,6 +191,15 @@ Avantages :
 """
 
 class TestAnimals(unittest.TestCase):
+    def test_dog(self):
+        self.assertEqual("Rex says Woof", Dog("Rex").describe())
+
+    def test_bird_no_fly(self):
+        self.assertEqual( "Pingu says Tweet", Bird("Pingu", can_fly=False).describe() )
+
+    def test_dog_needs_name(self):
+        with self.assertRaises(TypeError): Dog()
+
     """
     Classe de tests pour les animaux.
     Hérite de unittest.TestCase (voilà encore de l'héritage !).
@@ -231,6 +240,17 @@ class Greeter:
 
 
 class ScriptedCli:
+    def __init__(self, answers : list[str]) :
+         self.answers=answers
+         self.displayed=[]
+    def display(self, message:str):
+        self.displayed.append(message)
+
+    def prompt(self, message: str): 
+        self.displayed.append(message)
+        return self.answers.pop(0)
+    
+    
     """
     C'est un MOCK (faux objet) pour simuler un CLI dans les tests.
 
@@ -242,18 +262,18 @@ class ScriptedCli:
        - Ajoute message à self.displayed (l'utilisateur voit aussi la question)
        - Retourne la première réponse de self.answers (utilise list.pop(0))
     """
+# pour tester
 
-    def __init__(self, answers):
-        # TODO : Stockez les réponses et initialisez displayed
-        pass
+try:
+    cli = ScriptedCli(["Ada"])
+    Greeter(cli).play()
+    assert cli.displayed == ["What is your name?", "Hello Ada!"], cli.displayed
+except Exception as e:
+    print("OOPS - Something's wrong")
+    print(f"Error message : {e}")
+else:
+    print('Congrats ! Your implementation works !')
 
-    def display(self, message):
-        # TODO : Ajoutez le message à displayed
-        pass
-
-    def prompt(self, message):
-        # TODO : Ajoutez le message à displayed et retournez la première réponse
-        pass
 
 
 # =============================================================================
