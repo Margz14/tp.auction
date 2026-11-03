@@ -40,8 +40,10 @@ class Animal:
     """
 
     def __init__(self, name):
+        self.name = name
         # TODO : Créez l'attribut self.name avec le paramètre name
         pass
+
 
     def sound(self):
         """
@@ -61,6 +63,10 @@ class Animal:
 
 
 class Dog(Animal):
+    def __init__(self, name):
+            self.name = name
+    def sound(self):
+            return "Woof"
     """
     Classe fille d'Animal.
     Hérite de tout le code d'Animal (init, describe).
@@ -74,6 +80,10 @@ class Dog(Animal):
 
 
 class Cat(Animal):
+    def __init__(self, name):
+            self.name = name
+    def sound(self):
+            return "Meow"
     """
     Classe fille d'Animal.
     TODO : Redéfinissez sound() pour retourner "Meow"
@@ -82,8 +92,40 @@ class Cat(Animal):
     # TODO : Redéfinissez la méthode sound() pour retourner "Meow"
     pass
 
+# pour tester
+
+try:
+    assert Dog("Rex").describe() == "Rex says Woof"
+    assert Cat("Tom").describe() == "Tom says Meow"
+    assert Animal("Ghost").describe() == "Ghost says ..."
+    assert isinstance(Dog("Rex"), Animal)
+    assert issubclass(Cat, Animal)
+    assert "describe" not in vars(Dog), "describe must be inherited, not rewritten"
+except Exception as e:
+    print("OOPS - Something's wrong")
+    print(f"Error message : {e}")
+else:
+    print('Congrats ! Your implementation works !')
+
+#question 1 : Dog("Rex").describe() appelle directement la méthode fille, car elle utilise la méthode sound que l'on a modifié lorsqu'on a défini la sous classe Dog.
+#question 2 : La commande Dog.__mro__ renvoie bien (Dog, Animal, object).
+print(Dog.__mro__)
+
 
 class Bird(Animal):
+    def __init__(self, name, can_fly=True):
+        super().__init__(name)
+        self.can_fly=can_fly
+
+    def sound(self):
+        return "Tweet"
+
+    def describe(self):
+        if self.can_fly : 
+            return f"{super().describe()} and flies"
+        return super().describe()
+
+
     """
     Classe fille d'Animal.
     Plus complexe : elle a un paramètre supplémentaire can_fly.
@@ -97,16 +139,22 @@ class Bird(Animal):
        - Ajouter " and flies" à la fin si can_fly est True
     """
 
-    def __init__(self, name, can_fly=True):
-        # TODO : Appelez super().__init__(name) puis stockez can_fly
-        pass
 
-    # TODO : Redéfinissez sound() pour retourner "Tweet"
-    pass
 
-    # TODO : Redéfinissez describe() pour compléter celle du parent
-    pass
+# pour tester
 
+try:
+    assert Bird("Tweety").describe() == "Tweety says Tweet and flies"
+    assert Bird("Pingu", can_fly=False).describe() == "Pingu says Tweet"
+    assert Bird("Tweety").name == "Tweety"
+except Exception as e:
+    print("OOPS - Something's wrong")
+    print(f"Error message : {e}")
+else:
+    print('Congrats ! Your implementation works !')
+
+# 1 . Si on oublie d'appeler cette fonction, pyton nous renvoie un message d'erreur lorsqu'on utilise describe().
+#2. Il vaut mieux mettre pass , qui permet de ne pas renvoyer de message vide avec les "..." qui de toute façon ne donne pas d'info sur l'animal. 
 
 # =============================================================================
 # ÉCHAUFFEMENT 2 : LES TESTS UNITAIRES ET LES MOCKS
