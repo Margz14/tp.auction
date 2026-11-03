@@ -23,7 +23,16 @@ class Auction:
         self.cli.display(f"\nBidders are: {', '.join(self.bidders)}\n")
         return self.bidders 
 
+    def auction_loop(self, opening_bid, bidders):
+        NotImplementedError
+
     def gagnants(self, winner , standing_bid):
         self.cli.display("\n~~~~~~~~\n")
         self.cli.display(f"Winner is {winner}. Winning bid is {standing_bid}.")
+
+    def play(self, winner, price):
+        self.auction_loop(self.prixdepart(), self.encherisseurs())
+        if winner is None:
+            self.cli.display("No winner for this auction.")
+        self.gagnants(winner, price)
 
