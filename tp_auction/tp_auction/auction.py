@@ -6,14 +6,14 @@ class Auction:
     def __init__(self, cli=None):
         self.cli = cli if cli else Cli()
     
-    def prixdepart(self):
+    def opening_bid(self):
         opening_bid = self.cli.prompt('Please enter the amount for the opening bid:')
         if opening_bid!='' and opening_bid is not None :
             self.opening_bid = int(opening_bid)
             self.cli.display(f"Opening bid is: {opening_bid}")
         return opening_bid
 
-    def encherisseurs(self):
+    def bidders(self):
         bidders = []
         for index in count(1):
             bidder = self.cli.prompt(
@@ -33,7 +33,7 @@ class Auction:
         self.cli.display(f"Winner is {winner}. Winning bid is {standing_bid}.")
 
     def play(self):
-        winner, price = self.auction_loop(self.prixdepart(), self.encherisseurs())
+        winner, price = self.auction_loop(self.opening_bid(), self.bidders())
         if winner is None:
             self.cli.display("No winner for this auction.")
         else:
