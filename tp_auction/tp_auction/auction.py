@@ -1,28 +1,29 @@
 # TODO !
 from itertools import count
+from utils import Cli
+
 class Auction:
-    def __init__(self, cli):
-        self.cli = cli
+    def __init__(self, cli=None):
+        self.cli = cli if cli else Cli()
     
     def prixdepart(self):
-        self.cli.display(f'Started auction of type: {self.name}')
         opening_bid = self.cli.prompt('Please enter the amount for the opening bid:')
         if opening_bid!='' and opening_bid is not None :
             self.opening_bid = int(opening_bid)
-            self.cli.display(f"Opening bid is: {self.opening_bid}")
-        return self.opening_bid
+            self.cli.display(f"Opening bid is: {opening_bid}")
+        return opening_bid
 
     def encherisseurs(self):
-        self.bidders = []
+        bidders = []
         for index in count(1):
             bidder = self.cli.prompt(
                 f"Enter name for bidder {index} (enter nothing to move on):"
             )
             if not bidder:
                 break
-            self.bidders.append(bidder)
-        self.cli.display(f"\nBidders are: {', '.join(self.bidders)}\n")
-        return self.bidders 
+            bidders.append(bidder)
+        self.cli.display(f"\nBidders are: {', '.join(bidders)}\n")
+        return bidders 
 
     def auction_loop(self, opening_bid, bidders):
         raise NotImplementedError
