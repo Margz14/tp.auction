@@ -3,10 +3,13 @@ from itertools import count
 from utils import Cli
 
 class Auction:
-    def __init__(self, cli=None):
+    def __init__(self, cli=None, name=None):
         self.cli = cli if cli else Cli()
+        self.name=name
+
     
     def opening_bid(self):
+        self.cli.display(f'Started auction of type: {self.name}')
         opening_bid = self.cli.prompt('Please enter the amount for the opening bid:')
         if opening_bid!='' and opening_bid is not None :
             self.opening_bid = int(opening_bid)

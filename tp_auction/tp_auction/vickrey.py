@@ -5,12 +5,10 @@ from auction import Auction
 
 class VickreyAuction(Auction):
 
-    def __init__(self,cli=None):
-        super().__init__(cli)
-        
+    def __init__(self, cli=None, name='Vickrey'):
+        super().__init__(cli,name)
 
     def auction_loop(self, opening_bid, bidders):
-        self.cli.display(f'Started auction of type: Vickrey')
         opening_bid = int(opening_bid)
         standing_bid = opening_bid
         self.winner = None
